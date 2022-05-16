@@ -1,0 +1,10 @@
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem;
+    max-width: 40rem;
+    border: 0.1rem  solid black;
+    max-height: 30rem;
+    margin: 0.2rem;
+    width: 35%
+}

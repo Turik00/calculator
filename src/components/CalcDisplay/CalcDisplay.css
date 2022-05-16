@@ -1,0 +1,13 @@
+.calc-screen{
+    --calc-screen-font-size: 3rem;
+    height: fit-content;
+    border: 0.1rem solid black;
+    text-align: end;
+    margin-bottom: 0.1rem;
+}
+
+.calc-digits{
+    --calc-screen-digits-margin: 0.2rem;
+    font-size: var(--calc-screen-font-size);
+    margin: var(--calc-screen-digits-margin);
+}
