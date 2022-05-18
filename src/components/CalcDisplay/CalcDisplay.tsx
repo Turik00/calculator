@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { CalculatorState } from '../../store/calc-state/calculatorSlice';
 import { RootState } from '../../store/store';
 import './CalcDisplay.css';
 

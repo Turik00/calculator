@@ -15,7 +15,7 @@ const CalcButton = (props: any) => {
   }
 
   return (
-    <button type="button" className={`btn ${btnStyle}`} onClick={() => dispatch(calcAction(buttonText))}>
+    <button type="button" className={`btn ${btnStyle}`} onClick={() => dispatch(calcAction(buttonText) as any)}>
       {buttonText}
     </button>
   );
