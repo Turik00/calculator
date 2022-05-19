@@ -20,6 +20,7 @@ const initialState: CalculatorState = {
 
 export const calcAction = createAsyncThunk('calculator/calcAction', async (keyValue: string, thunkAPI) => {
   return await new Promise<CalculatorState>((resolve) => {
+    // delegate heavy work to worker thread
       worker.postMessage(
         {
           state: (thunkAPI.getState() as RootState).calculator,
@@ -35,7 +36,13 @@ export const calcAction = createAsyncThunk('calculator/calcAction', async (keyVa
 export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState,
-  reducers: {},
+  reducers: {
+    calcChangeInputAction: (state: CalculatorState, action: PayloadAction<string>) =>{
+      state.accumulatedSum = 0;
+      state.display = action.payload;
+      state.isAccumulating = true;
+    }
+  },
   extraReducers: (builder: any) => {
     builder.addCase(calcAction.fulfilled, (state: CalculatorState, action: PayloadAction<CalculatorState>) => {
       state.accumulatedSum = action.payload.accumulatedSum;
@@ -50,7 +57,6 @@ const performCalculatorAction = (state: CalculatorState, action: string) => {
     case '=':
       state.accumulatedSum = eval(state.display);
       state.display = `${state.accumulatedSum}`;
-      state.isAccumulating = false;
       break;
     case 'AC':
       state.accumulatedSum = 0;
@@ -63,6 +69,10 @@ const performCalculatorAction = (state: CalculatorState, action: string) => {
       // state.isAccumulating = false;
       break;
     default:
+      if ((action === '+' || action === '-' || action === '*' || action === '/') && isNaN(+state.display.slice(-1))) {
+        state.display = `${state.display.slice(0, -1)}${action}`;
+        return;
+      }
       if (!state.isAccumulating) {
         if (action != '0') {
           state.isAccumulating = true;
@@ -76,6 +86,6 @@ const performCalculatorAction = (state: CalculatorState, action: string) => {
 };
 
 // Action creators are generated for each case reducer function
-//export const { calcAction1 } = calculatorSlice.actions;
+export const { calcChangeInputAction } = calculatorSlice.actions;
 
 export default calculatorSlice.reducer;

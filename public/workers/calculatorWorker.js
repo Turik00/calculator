@@ -1,7 +1,11 @@
 /* eslint-disable no-restricted-globals */
 self.onmessage = (e) => {
   const action = JSONParseFn(e.data.action);
-  action(e.data.state, e.data.key);
+  try {
+    action(e.data.state, e.data.key);
+  } catch (error) {
+    console.log(error);
+  }
   self.postMessage(e.data.state);
 };
 
