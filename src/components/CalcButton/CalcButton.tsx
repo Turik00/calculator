@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { calcAction } from '../../store/calc-state/calculatorSlice';
+import './CalcButton.css'
 
 const CalcButton = (props: any) => {
   const { buttonText } = props;
@@ -7,7 +8,7 @@ const CalcButton = (props: any) => {
   let btnStyle = 'btn-primary';
 
   if (buttonText === '=') {
-    btnStyle = 'btn-warning';
+    btnStyle = 'btn-span btn-warning';
   } else if (buttonText === 'AC') {
     btnStyle = 'btn-danger';
   } else if (isNaN(buttonText)) {
